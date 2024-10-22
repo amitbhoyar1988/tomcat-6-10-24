@@ -30,6 +30,12 @@ pipeline {
                 sh 'docker push abhoyar9/22-10-24:latest'
             }
         }
+        stage('Docker Image Cleaning in Jenkins') {
+            steps {
+                sh 'docker image prune -a -f'
+              
+            }
+        }
         stage('Docker Container RUN ') {
             steps {
                 sshPublisher(publishers: [sshPublisherDesc(configName: 'Docker', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sudo sh /root/script/1.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
